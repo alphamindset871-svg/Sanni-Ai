@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sanni AI — AI Video Generator</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:Arial,Helvetica,sans-serif;background:#0b0d12;color:#fff;min-height:100vh}
+    .wrap{max-width:900px;margin:auto;padding:18px}
+    header{display:flex;align-items:center;justify-content:space-between;padding:10px 0 28px}
+    .logo{font-size:24px;font-weight:800;letter-spacing:-.5px}
+    .logo span{color:#7c5cff}
+    .badge{font-size:12px;color:#bfc3d4;border:1px solid #272b37;border-radius:20px;padding:8px 12px}
+    .hero{text-align:center;padding:36px 10px 25px}
+    h1{font-size:clamp(34px,8vw,62px);line-height:1.05;letter-spacing:-2px}
+    h1 span{color:#8b6cff}
+    .sub{color:#aeb3c2;margin:16px auto 0;max-width:620px;font-size:16px;line-height:1.6}
+    .card{margin:25px auto 0;background:#12151d;border:1px solid #252a36;border-radius:22px;padding:18px;max-width:760px;box-shadow:0 20px 70px rgba(0,0,0,.25)}
+    textarea{width:100%;min-height:145px;resize:vertical;background:#0d1016;color:#fff;border:1px solid #292e3a;border-radius:15px;padding:16px;font-size:15px;outline:none}
+    textarea:focus{border-color:#7058e8}
+    .row{display:flex;gap:10px;align-items:center;margin-top:12px;flex-wrap:wrap}
+    select{background:#0d1016;color:#ddd;border:1px solid #292e3a;border-radius:12px;padding:12px}
+    button{border:0;border-radius:13px;padding:13px 20px;font-size:15px;font-weight:700;cursor:pointer}
+    .generate{margin-left:auto;background:#7c5cff;color:white}
+    .generate:hover{background:#6948ed}
+    .output{display:none;margin-top:18px;border-top:1px solid #252a36;padding-top:18px}
+    .video-box{aspect-ratio:16/9;background:#090b0f;border:1px dashed #343a49;border-radius:15px;display:grid;place-items:center;color:#73798b;text-align:center;padding:20px}
+    .download{margin-top:12px;background:#202532;color:#fff}
+    .info{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:30px}
+    .mini{background:#12151d;border:1px solid #252a36;border-radius:16px;padding:18px}
+    .mini b{display:block;margin-bottom:7px}.mini p{font-size:13px;color:#989eae;line-height:1.5}
+    footer{text-align:center;color:#707687;font-size:12px;padding:35px 0 20px}
+    @media(max-width:600px){.info{grid-template-columns:1fr}.generate{width:100%;margin-left:0}.row select{flex:1}}
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="logo">Sanni <span>AI</span></div>
+    <div class="badge">AI Video Generator</div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h1>Create videos with <span>AI.</span></h1>
+      <p class="sub">Apna idea likho aur AI video creation ka simple experience pao.</p>
+
+      <div class="card">
+        <textarea id="prompt" placeholder="Example: Ek cinematic jungle scene jahan ek sher sunset ke time chal raha ho..."></textarea>
+        <div class="row">
+          <select id="ratio">
+            <option>16:9 Landscape</option>
+            <option>9:16 Shorts</option>
+            <option>1:1 Square</option>
+          </select>
+          <select id="quality">
+            <option>Standard</option>
+            <option>HD</option>
+          </select>
+          <button class="generate" onclick="generate()">Generate Video</button>
+        </div>
+
+        <div class="output" id="output">
+          <div class="video-box" id="videoBox">
+            <div>
+              <strong>Video preview</strong><br>
+              <span>Demo interface — AI API connect karne par yahan generated video dikhega.</span>
+            </div>
+          </div>
+          <button class="download" onclick="alert('Real download ke liye AI video API/backend connect karna hoga.')">Download Video</button>
+        </div>
+      </div>
+
+      <div class="info">
+        <div class="mini"><b>✦ Simple</b><p>Clean interface jo mobile par bhi easy hai.</p></div>
+        <div class="mini"><b>⚡ Fast</b><p>Prompt se video workflow ko simple rakha gaya hai.</p></div>
+        <div class="mini"><b>▣ Creator Ready</b><p>Shorts ke liye 9:16 option bhi diya gaya hai.</p></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>© 2026 Sanni AI • Built for creators</footer>
+</div>
+
+<script>
+function generate(){
+  const p=document.getElementById('prompt').value.trim();
+  const out=document.getElementById('output');
+  const box=document.getElementById('videoBox');
+  if(!p){alert('Pehle video ka prompt likho.');return;}
+  out.style.display='block';
+  box.innerHTML='<div><strong>Generating...</strong><br><span>Demo mode: yahan AI-generated video aayega.</span></div>';
+  setTimeout(()=>{box.innerHTML='<div><strong>Ready for API</strong><br><span>Frontend successfully working. Ab AI video generation API connect karni hai.</span></div>';},1200);
+}
+</script>
+</body>
+</html>
