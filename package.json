@@ -1,0 +1,8 @@
+{
+  "name": "sanni-ai-video-generator",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "ai": "latest"
+  }
+}

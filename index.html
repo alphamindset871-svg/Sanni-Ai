@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="hi">
 <head>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2181403929357770"
+     crossorigin="anonymous"></script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sanni AI — AI Video Generator</title>
@@ -65,10 +67,10 @@
           <div class="video-box" id="videoBox">
             <div>
               <strong>Video preview</strong><br>
-              <span>Demo interface — AI API connect karne par yahan generated video dikhega.</span>
+              <span>Generate karne ke baad video yahan chalega.</span>
             </div>
           </div>
-          <button class="download" onclick="alert('Real download ke liye AI video API/backend connect karna hoga.')">Download Video</button>
+          <a id="downloadLink" class="download" href="#" download="sanni-ai-video.mp4" style="display:none;text-decoration:none;text-align:center;">Download Video</a>
         </div>
       </div>
 
@@ -84,14 +86,29 @@
 </div>
 
 <script>
-function generate(){
+const API_URL = '/api/generate';
+
+async function generate(){
   const p=document.getElementById('prompt').value.trim();
+  const ratio=document.getElementById('ratio').value;
+  const quality=document.getElementById('quality').value;
   const out=document.getElementById('output');
   const box=document.getElementById('videoBox');
+  const link=document.getElementById('downloadLink');
   if(!p){alert('Pehle video ka prompt likho.');return;}
   out.style.display='block';
-  box.innerHTML='<div><strong>Generating...</strong><br><span>Demo mode: yahan AI-generated video aayega.</span></div>';
-  setTimeout(()=>{box.innerHTML='<div><strong>Ready for API</strong><br><span>Frontend successfully working. Ab AI video generation API connect karni hai.</span></div>';},1200);
+  link.style.display='none';
+  box.innerHTML='<div><strong>Generating...</strong><br><span>AI video ban raha hai, thoda wait karo...</span></div>';
+  try{
+    const r=await fetch(API_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({prompt:p,ratio,quality})});
+    const data=await r.json();
+    if(!r.ok) throw new Error(data.error || 'Generation failed');
+    box.innerHTML='<video controls playsinline style="width:100%;height:100%;object-fit:contain;border-radius:12px" src="'+data.videoUrl+'"></video>';
+    link.href=data.videoUrl;
+    link.style.display='block';
+  }catch(e){
+    box.innerHTML='<div><strong>Video nahi ban paya</strong><br><span>'+e.message+'</span></div>';
+  }
 }
 </script>
 </body>
